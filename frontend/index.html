@@ -74,7 +74,7 @@
       }
 
       function getItems() {
-        fetch("https://fastly.picsum.photos/")
+        fetch("http://localhost:8080/api/v1/site/1/users")
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
