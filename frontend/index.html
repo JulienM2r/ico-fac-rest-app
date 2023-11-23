@@ -37,37 +37,55 @@
         align-items: center;
         margin-top: 50px;
       }
+      .item {
+        list-style: none;
+      }
+      p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+      }
+      h2 {
+        font-weight: 300;
+      }
+      .styling {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      img {
+        border-radius: 9px;
+      }
+      .subHead {
+        display: flex;
+        justify-content: space-between;
+      }
+      .center {
+        height: 200px;
+      }
     </style>
     <script>
-      var callAPI = (firstName, lastName) => {
-        /* var myHeaders = new Headers();
+      function callAPI(fName, lName) {
+        // Call API
+        fetch("http://localhost:3000/api/hello/" + fName + "/" + lName)
+          .then((response) => response.json())
+          .then((data) => {
+            // Display API response
+            alert(data.message);
+          });
+      }
 
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({ firstName: firstName, lastName: lastName });
-        var requestOptions = {
-          method: "GET",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow",
-        };*/
-
-        fetch("https://g770e28q8a.execute-api.eu-west-3.amazonaws.com/Prod")
-          .then((response) => response.text())
-          .then((result) => {
-            var data = JSON.parse(result);
-            var item = document.querySelector(".item");
-            item.innerHTML = `<h2>${data.firstName} ${data.lastName}</h2>
-            <p>${data.message}</p>`;
-          })
-          .catch((error) =>
-            console.log("Erreur de recuperation des données ", error)
-          );
-      };
+      function getItems() {
+        fetch("https://fastly.picsum.photos/")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            var img = document.querySelector("img");
+            img.src = data.message;
+          });
+      }
     </script>
   </head>
   <body>
-    <form>
+    <form method="post">
       <label>First Name :</label>
       <input type="text" id="fName" />
       <label>Last Name :</label>
@@ -83,14 +101,35 @@
     <div class="content d-flex align-center">
       <ul class="card w-50 center">
         <li class="item">
-          <h2>Item 1</h2>
-          <p>Item 1 description</p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-            dolor?
-          </p>
+          <h2>Example de détails</h2>
+          <div class="styling">
+            <div>
+              <img
+                src="https://picsum.photos/200/300"
+                alt="Image de l'item"
+                width="200"
+                height="200"
+              />
+            </div>
+            <div>
+              <div class="subHead">
+                <p>Item 1 description</p>
+                <p>Lorem, ipsum.</p>
+                <p>Lorem, ipsum.</p>
+                <p>Lorem, ipsum.</p>
+              </div>
+              <div>
+                <p>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Soluta, dolor?
+                </p>
 
-          <button class="btn btn-primary">Fake bouton</button>
+                <button class="btn btn-primary" onclick="getItems()">
+                  Fake bouton
+                </button>
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
