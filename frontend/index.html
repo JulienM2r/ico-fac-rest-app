@@ -40,18 +40,19 @@
     </style>
     <script>
       var callAPI = (firstName, lastName) => {
-        var myHeaders = new Headers();
+        /* var myHeaders = new Headers();
 
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({ firstName: firstName, lastName: lastName });
         var requestOptions = {
-          method: "POST",
+          method: "GET",
           headers: myHeaders,
           body: raw,
           redirect: "follow",
-        };
-        fetch("http://localhost:8080/api/v1/hello", requestOptions)
+        };*/
+
+        fetch("https://g770e28q8a.execute-api.eu-west-3.amazonaws.com/Prod")
           .then((response) => response.text())
           .then((result) => {
             var data = JSON.parse(result);
@@ -84,6 +85,12 @@
         <li class="item">
           <h2>Item 1</h2>
           <p>Item 1 description</p>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta,
+            dolor?
+          </p>
+
+          <button class="btn btn-primary">Fake bouton</button>
         </li>
       </ul>
     </div>
