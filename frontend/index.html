@@ -1,91 +1,141 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Hello World</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
     <!-- Add some CSS to change client UI -->
     <style>
-    body {
-        background-color: #232F3E;
-        }
-    label, button {
-        color: #FF9900;
+      body {
+        background-color: #232f3e;
+        color: #ff9900;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin: 20px;
+      }
+      label,
+      button {
+        color: #ff9900;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
         margin-left: 40px;
-        }
-     input {
-        color: #232F3E;
+      }
+      input {
+        color: #232f3e;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
         margin-left: 20px;
-        }
+      }
+      .align-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+      }
+      .item {
+        list-style: none;
+      }
+      p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+      }
+      h2 {
+        font-weight: 300;
+      }
+      .styling {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      img {
+        border-radius: 9px;
+      }
+      .subHead {
+        display: flex;
+        justify-content: space-between;
+        margin-left: -150px;
+        padding-right: 20px;
+      }
+      .center {
+        height: 200px;
+      }
     </style>
     <script>
-        // define the callAPI function that takes a first name and last name as parameters
-        var callAPI = (firstName,lastName)=>{
-            // instantiate a headers object
-            var myHeaders = new Headers();
-            // add content type header to object
-            myHeaders.append("Content-Type", "application/json");
-            // using built in JSON utility package turn object to string and store in a variable
-            var raw = JSON.stringify({"firstName":firstName,"lastName":lastName});
-            // create a JSON object with parameters for API call and store in a variable
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-            // make API call with parameters and use promises to get response
-            fetch("https://g770e28q8a.execute-api.eu-west-3.amazonaws.com/Prod", requestOptions)
-            .then(response => response.text())
-            .then(result => alert(JSON.parse(result).body))
-            .catch(error => console.log('error', error));
-        }
+      function callAPI(fName, lName) {
+        // Call API
+        fetch("http://localhost:3000/api/hello/" + fName + "/" + lName)
+          .then((response) => response.json())
+          .then((data) => {
+            // Display API response
+            alert(data.message);
+          });
+      }
+
+      function getItems() {
+        fetch("http://localhost:8080/api/v1/site/1/users")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            var img = document.querySelector("img");
+            img.src = data.message;
+          });
+      }
     </script>
-</head>
-<body>
-    <form>
-        <label>First Name :</label>
-        <input type="text" id="fName">
-        <label>Last Name :</label>
-        <input type="text" id="lName">
-        <!-- set button onClick method to call function we defined passing input values as parameters -->
-        <button type="button" onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)">Call API</button>
+  </head>
+  <body>
+    <form method="post">
+      <label>First Name :</label>
+      <input type="text" id="fName" />
+      <label>Last Name :</label>
+      <input type="text" id="lName" />
+      <button
+        type="button"
+        onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)"
+      >
+        Call API
+      </button>
     </form>
-    <table>
-        <tr>
-          <td>Jean</td>
-          <td>Biche</td>
-        </tr>
-        <tr>
-          <td>Jeanne</td>
-          <td>Biche</td>
-        </tr>
-      </table>
 
-      <!-- exports.getCountItemsHandler = async (event) => {
-        const { httpMethod, path } = event;
-        if (httpMethod !== 'GET') {
-            throw new Error(`getAllItems only accept GET method, you tried: ${httpMethod}`);
-        }
-        // All log statements are written to CloudWatch by default. For more information, see
-        // https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-logging.html
-        console.log('received:', JSON.stringify(event));
-    
-        // get all items from the table (only first 1MB data, you can use `LastEvaluatedKey` to get the rest of data)
-        // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property
-        // https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
-        const params = { TableName: tableName };
-        const { Items } = await docClient.scan(params).promise();
-        const itemsLenght = Items.lenght()
-        const response = {
-            statusCode: 200,
-            body: JSON.stringify({
-                itemCout : itemsLenght
-            }),
-        }; -->
 
-</body>
+    <div class="content d-flex align-center">
+      <ul class="card w-50 center">
+        <li class="item">
+          <h2>Example de détails</h2>
+          <div class="styling">
+            <div>
+              <img
+                src="https://picsum.photos/200/300"
+                alt="Image de l'item"
+                width="200"
+                height="200"
+              />
+            </div>
+            <div>
+              <div class="subHead">
+                <p>Monument</p>
+                <p>Célébrité</p>
+                <p>Lieux</p>
+                <p>Departement</p>
+              </div>
+              <div>
+                <p>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Soluta, dolor?
+                </p>
+
+                <button class="btn btn-primary" onclick="getItems()">
+                  Fake bouton
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
+
