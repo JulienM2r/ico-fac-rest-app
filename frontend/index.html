@@ -43,23 +43,25 @@
         var myHeaders = new Headers();
 
         myHeaders.append("Content-Type", "application/json");
-        // using built in JSON utility package turn object to string and store in a variable
+
         var raw = JSON.stringify({ firstName: firstName, lastName: lastName });
-        // create a JSON object with parameters for API call and store in a variable
         var requestOptions = {
           method: "POST",
           headers: myHeaders,
           body: raw,
           redirect: "follow",
         };
-        // make API call with parameters and use promises to get response
-        fetch(
-          "https://g770e28q8a.execute-api.eu-west-3.amazonaws.com/Prod",
-          requestOptions
-        )
+        fetch("http://localhost:8080/api/v1/hello", requestOptions)
           .then((response) => response.text())
-          .then((result) => alert(JSON.parse(result).body))
-          .catch((error) => console.log("error", error));
+          .then((result) => {
+            var data = JSON.parse(result);
+            var item = document.querySelector(".item");
+            item.innerHTML = `<h2>${data.firstName} ${data.lastName}</h2>
+            <p>${data.message}</p>`;
+          })
+          .catch((error) =>
+            console.log("Erreur de recuperation des données ", error)
+          );
       };
     </script>
   </head>
