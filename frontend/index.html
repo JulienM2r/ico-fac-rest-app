@@ -20,6 +20,9 @@
         font-size: 20px;
         margin-left: 20px;
         }
+    .info {
+        margin: auto;
+    }
     </style>
     <script>
         // define the callAPI function that takes a first name and last name as parameters
@@ -55,11 +58,11 @@
         <button type="button" onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)">Call API</button>
     </form>
 
-    <div>
+    <div class="info">
         <ul>
             <h2>Item 1</h2>
             <li>
-                <h3>Item desc</h3>
+                <p>Description</p>
             </li>
         </ul>
     </div>
